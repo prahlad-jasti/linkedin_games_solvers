@@ -136,4 +136,4 @@ if __name__ == "__main__":
     solution = solve(grid)
     solution_centers = [center_coords[i][j] for i, j in solution]
     completed_grid = plot(get_cropped_image(image), solution_centers)
-    completed_grid.show()
+    completed_grid.save("./solutions/" + image_path[:-4] + "_solved.png")
