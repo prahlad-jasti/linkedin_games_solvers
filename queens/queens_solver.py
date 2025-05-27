@@ -25,6 +25,7 @@ def grid_bounding_box(image: np.ndarray) -> Tuple[int, int, int, int]:
 
     return x, y, w, h
 
+
 def find_boundaries(image: np.ndarray) -> tuple:
     x, y, w, h = grid_bounding_box(image)
     cropped_grid = cv2.cvtColor(image[y:y + h, x:x + w], cv2.COLOR_BGR2GRAY)
@@ -54,11 +55,13 @@ def find_boundaries(image: np.ndarray) -> tuple:
 
     return horizontal_lines, vertical_lines
 
-def get_cropped_image(image: np.ndarray) -> np.ndarray:
+
+def get_cropped_image(image: np.ndarray) -> Image:
     x, y, w, h = grid_bounding_box(image)
 
     cropped_image = image[y:y + h, x:x + w]
     return Image.fromarray(cropped_image)
+
 
 def convert_to_num_grid(image: np.ndarray) -> Tuple[List[List[int]], List[List[Tuple[int, int]]]]:
     horizontal_lines, vertical_lines = find_boundaries(image)
@@ -84,6 +87,7 @@ def convert_to_num_grid(image: np.ndarray) -> Tuple[List[List[int]], List[List[T
             num_grid[i][j] = idx
 
     return num_grid, center_coords
+
 
 def solve(grid: List[List[int]]) -> List[Tuple[int, int]]:
     m, n = len(grid), len(grid[0])
@@ -113,7 +117,8 @@ def solve(grid: List[List[int]]) -> List[Tuple[int, int]]:
 
     return backtrack()
 
-def plot(image: np.ndarray, solution: List[Tuple[int, int]], r = 10) -> Image:
+
+def plot(image: Image, solution: List[Tuple[int, int]], r = 10) -> Image:
     final_grid = image.copy()
     draw = ImageDraw.Draw(final_grid)
 
@@ -122,6 +127,7 @@ def plot(image: np.ndarray, solution: List[Tuple[int, int]], r = 10) -> Image:
         draw.ellipse(bounding_box, fill="black", outline="black", width=2)
 
     return final_grid
+
 
 # Test the function
 if __name__ == "__main__":
